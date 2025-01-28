@@ -1,23 +1,34 @@
 // Global variable to store computer choice
 var computerChoice;
+player = document.querySelector("#player-choice");
+finalResult = document.querySelector("#result-text");
+let playerChoice = "";
+let rock = document.querySelector("#rock");
+let paper = document.querySelector("#paper");
+let scissors = document.querySelector("#scissors");
 
+// Function to generate random computer choice
 function generateRandomChoice() {
-  var choices = ["rock", "paper", "scissors"];
+  var choices = ["Rock", "Paper", "Scissors"];
   return choices[Math.floor(Math.random() * choices.length)];
 }
 
+
+// Function to update the computer's choice
 function updateComputerChoice() {
-  computerChoice = generateRandomChoice(); // Store the result in a global variable
-  $("#computer-choice").attr("src", "/images/" + computerChoice + ".png");
+  computerChoice = generateRandomChoice();
+  let ComputerDom = document.querySelector("#computer-choice");
+  ComputerDom.textContent = computerChoice;
 }
 
+// Function to compare player and computer choices
 function compareChoices(playerChoice, computerChoice) {
   if (playerChoice === computerChoice) {
     return "Tie";
   } else if (
-    (playerChoice === "rock" && computerChoice === "scissors") ||
-    (playerChoice === "paper" && computerChoice === "rock") ||
-    (playerChoice === "scissors" && computerChoice === "paper")
+    (playerChoice === "Rock" && computerChoice === "Scissors") ||
+    (playerChoice === "Paper" && computerChoice === "Rock") ||
+    (playerChoice === "Scissors" && computerChoice === "Paper")
   ) {
     return "Player Wins";
   } else {
@@ -25,29 +36,29 @@ function compareChoices(playerChoice, computerChoice) {
   }
 }
 
-function updateResult(playerChoice, computerChoice) {
-  var resultText = compareChoices(playerChoice, computerChoice);
-  $("#result-text").text(resultText);
-}
 
-// Event handlers
-$("#rock").on("click", function() {
-  var playerChoice = "rock";
-  updateComputerChoice(); // Update and store computer choice
-  updateResult(playerChoice, computerChoice); // Use the global computerChoice
+
+// Add event listeners to buttons
+rock.addEventListener("click", function () {
+  playerChoice = "Rock";
+  player.textContent = playerChoice;
+  updateComputerChoice(); // Generate computer choice
+  let result = compareChoices(playerChoice, computerChoice);
+  finalResult.textContent = result;
 });
 
-$("#paper").on("click", function() {
-  var playerChoice = "paper";
-  updateComputerChoice(); // Update and store computer choice
-  updateResult(playerChoice, computerChoice); // Use the global computerChoice
+paper.addEventListener("click", function () {
+  playerChoice = "Paper";
+  player.textContent = playerChoice;
+  updateComputerChoice();
+  let result = compareChoices(playerChoice, computerChoice);
+  finalResult.textContent = result;
 });
 
-$("#scissors").on("click", function() {
-  var playerChoice = "scissors";
-  updateComputerChoice(); // Update and store computer choice
-  updateResult(playerChoice, computerChoice); // Use the global computerChoice
+scissors.addEventListener("click", function () {
+  playerChoice = "Scissors";
+  player.textContent = playerChoice;
+  updateComputerChoice();
+  let result = compareChoices(playerChoice, computerChoice);
+  finalResult.textContent = result;
 });
-
-// Initialize the computer's choice when the page loads
-updateComputerChoice();
